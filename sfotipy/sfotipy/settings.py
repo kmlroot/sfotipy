@@ -29,7 +29,17 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    "django.core.context_processors.request",
+    "sfotipy.context_processors.basico",
+)
+
+GRAPPELLI_ADMIN_TITLE = 'Sfotipy'
+
 INSTALLED_APPS = (
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +48,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'albums',
     'artists',
+    'django_extensions',
+    'mockups',
     'tracks',
     'userprofiles',
 )
@@ -50,6 +62,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'sfotipy.middleware.PaisMiddleware',
+
 )
 
 ROOT_URLCONF = 'sfotipy.urls'
@@ -86,7 +100,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2] + ['media'])
+MEDIA_URL = '/media/'
+
 #Backends
-AUTHENTICATION_BACKENDS = (
-    'userprofiles.backends.EmailBackEnd'
-)
+# AUTHENTICATION_BACKENDS = (
+#     'userprofiles.backends.EmailBackend',
+# )

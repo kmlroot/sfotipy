@@ -10,6 +10,10 @@ class UserCreationEmailForm(UserCreationForm):
 		model = User
 		fields = ('username', 'email')
 
+	# hacer funcion para validar el email	
+	# def clean_email(self):
+	# 	email = self.cleaned_data('email')
+
 class EmailAuthenticationForm(forms.Form):
 	email 		= forms.EmailField()
 	password 	= forms.CharField(label='Password', widget=forms.PasswordInput)

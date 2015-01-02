@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 
-class EmailBackEnd(object):
+class EmailBackend(object):
 	def authenticate(self, email=None, password=None):
 		try:
 			user = User.objects.get(email=email)
@@ -14,4 +14,3 @@ class EmailBackEnd(object):
 			return User.objects.get(id=user_id)
 		except User.DoesNotExist:
 			raise None
-

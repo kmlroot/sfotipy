@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title> Sfotipy con Django </title>
+	<title> Sfotipy con Django {{titulo}} </title>
 </head>
 <body>
 	<section>
+		<ul>
+			{%for track in tracks%}
+			<li>
+				<a href="{{track.get_absolute_url}}"> {{track.title}} </a> {% if track.id == selected_track.id %} ======= {% endif %}
+				
+			</li>{% endfor %}
+		</ul>
 		<p> Title: 	{{track.title}}					</p>
 		<p> Order: 	{{track.order}}					</p>
 		<p> Track file: {{track.track_file}} 		</p>

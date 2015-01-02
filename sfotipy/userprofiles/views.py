@@ -10,6 +10,10 @@ def signup(request):
 	if form.is_valid():
 		form.save()
 
+		# deberia loguear de una vez
+		# crear userprofiles
+		# deberiamos redireccionar al home
+		
 	return render(request, 'signup.html', {'form': form})
 
 def signin(request):
@@ -17,5 +21,7 @@ def signin(request):
 
 	if form.is_valid():
 		login(request, form.get_user())
+
+		# deberiamos redireccionar al home
 
 	return render(request, 'signin.html', {'form': form})

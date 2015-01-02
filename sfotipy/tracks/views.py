@@ -10,7 +10,7 @@ def track_view(request, title):
 	# 	track = Track.objects.get(title=title)
 	# except Track.DoesNotExist:
 	# 	raise Http404
-
+	# import ipdb; ipdb.set_trace()
 	track = get_object_or_404(Track, title=title)
 
 	# return HttpResponse('El track fue encontrado con exito y su nombre es: ' + title)
@@ -27,8 +27,8 @@ def track_view(request, title):
 		}
 	}
 
-	# return render(request, 'track.html', {'track': track, 'bio': bio})
+	return render(request, 'track.html', {'track': track, 'bio': bio})
 
-	json_data = json.dumps(data)
+	#json_data = json.dumps(data)
 
-	return HttpResponse(json_data, content_type='application/json')
+	#return HttpResponse(json_data, content_type='application/json')
