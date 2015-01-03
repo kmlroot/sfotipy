@@ -32,3 +32,14 @@ def track_view(request, title):
 	#json_data = json.dumps(data)
 
 	#return HttpResponse(json_data, content_type='application/json')
+
+from rest_framework import routers, serializers, viewsets
+
+class TrackSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Track
+        fields = ('title', 'order', 'track_file', 'artist', 'album')
+
+class TrackViewSet(viewsets.ModelViewSet):
+    queryset = Track.objects.all()
+    serializer_class =  TrackSerializer

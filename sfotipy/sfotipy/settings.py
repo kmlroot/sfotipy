@@ -24,8 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['']
 
 # Application definition
 
@@ -35,6 +34,10 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     "django.core.context_processors.request",
     "sfotipy.context_processors.basico",
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
+}
 
 GRAPPELLI_ADMIN_TITLE = 'Sfotipy'
 
@@ -50,6 +53,7 @@ INSTALLED_APPS = (
     'artists',
     'django_extensions',
     'mockups',
+    'rest_framework',
     'tracks',
     'userprofiles',
 )
@@ -99,9 +103,31 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'localhost:6379',
+        'OPTIONS': {
+            'DB': 1,
+            # 'PASSWORD': 'mypass',
+            'PARSER_CLASS': 'redis.connection.HiredisParser'
+        }
+    }    
+}
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+
+
 
 MEDIA_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2] + ['media'])
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2] + ['content'])
+MEDIA_URL = '/content/'
 
 #Backends
 # AUTHENTICATION_BACKENDS = (
