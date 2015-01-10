@@ -1,10 +1,15 @@
 import json
+import time 
 from django.shortcuts import render, get_object_or_404
 from django.http 	  import HttpResponse, Http404	
 from .models 		  import Track	
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+from artists.task import demorada
 
 # Create your views here.
 
+# @cache_page(60)
 def track_view(request, title):
 	# try:
 	# 	track = Track.objects.get(title=title)
@@ -16,7 +21,7 @@ def track_view(request, title):
 	# return HttpResponse('El track fue encontrado con exito y su nombre es: ' + title)
 	
 	bio = track.artist.biography
-
+	# data = cache.get('data_%s' %title)
 	data = {
 		'title' : 	track.title,
 		'order' : 	track.order,
@@ -26,7 +31,10 @@ def track_view(request, title):
 			'biography'	: bio,
 		}
 	}
-
+	# demorada()
+	# demorada.apply_async(countdown=5)
+	# cache.set('data_%s' %title, data)
+	# time.sleep(5)
 	return render(request, 'track.html', {'track': track, 'bio': bio})
 
 	#json_data = json.dumps(data)

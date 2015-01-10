@@ -56,9 +56,11 @@ INSTALLED_APPS = (
     'rest_framework',
     'tracks',
     'userprofiles',
+    'sorl.thumbnail',
 )
 
 MIDDLEWARE_CLASSES = (
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -67,8 +69,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'sfotipy.middleware.PaisMiddleware',
-
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 )
+
 
 ROOT_URLCONF = 'sfotipy.urls'
 
@@ -120,16 +123,22 @@ CACHES = {
     }    
 }
 
+# CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+ 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 
 
-
 MEDIA_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2] + ['media'])
-MEDIA_URL = '/media/'
 MEDIA_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2] + ['content'])
-MEDIA_URL = '/content/'
+MEDIA_URL = '/media/'
+
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 #Backends
 # AUTHENTICATION_BACKENDS = (
 #     'userprofiles.backends.EmailBackend',
 # )
+
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = 'redis://localhost:6379/0'
